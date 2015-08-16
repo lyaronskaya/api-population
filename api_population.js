@@ -99,59 +99,64 @@ for (i = 0; i < 3; ++i) {
  * Диалог с пользователем
  */
 
-requests = ['/cities', '/populations'];
+var callAboutPLace = function() {
+    var requests = ['/cities', '/populations'];
 
-var input = window.prompt('Введите страну или город', 'Cameroon');
-console.log(input);
-if (input && input !== '') {
-    var responses = {};
+    var input = window.prompt('Введите страну или город', 'Cameroon');
+    console.log(input);
+    if (input && input !== '') {
+        var responses = {};
 
-    function callback(error, result) {
-        var i = callback.i,
-            request = requests[i];
-        responses[request] = result;
-        var l = [];
-        for (K in responses)
-            l.push(K);
+        function callback(error, result) {
+            var i = callback.i,
+                request = requests[i];
+            responses[request] = result;
+            var l = [];
+            for (K in responses)
+                l.push(K);
 
-        if (l.length == 2) {
-            var c = [], p = 0;
+            if (l.length == 2) {
+                var c = [], p = 0;
 
-            for (i = 0; i < responses['/cities'].length; i++) {
-                if (responses['/cities'][i].name === input) {
-                    c.push(input);
-                    break;
-                }
-                if (responses['/cities'][i].country === input) {
-                    c.push(responses['/cities'][i].name);
-                }
-            }
-
-            if (c.length < 1) {
-                alert('Unknown city or country');
-            }
-            else {
-                for (i = 0; i < responses['/populations'].length; i++) {
-                    for (j = 0; j < c.length; j++) {
-                        if (responses['/populations'][i].name === c[j]) {
-                            p += responses['/populations'][i].count;
-                        }
+                for (i = 0; i < responses['/cities'].length; i++) {
+                    if (responses['/cities'][i].name === input) {
+                        c.push(input);
+                        console.log(responses['/cities'][i].name);
+                        break;
+                    }
+                    if (responses['/cities'][i].country === input) {
+                        c.push(responses['/cities'][i].name);
                     }
                 }
-                alert('Population: ' + p);
+                console.log(c + ' p ' +  p);
+                if (c.length < 1) {
+
+                    //alert('Unknown city or country');
+                }
+                else {
+                    for (i = 0; i < responses['/populations'].length; i++) {
+                        for (j = 0; j < c.length; j++) {
+                            if (responses['/populations'][i].name === c[j]) {
+                                p += responses['/populations'][i].count;
+                            }
+                        }
+                    }
+                    alert('Population: ' + p);
+                }
             }
+            callback.i++;
+        };
+
+
+        callback.i = 0;
+
+        for (i = 0; i < requests.length; i++) {
+            var request = requests[i];
+            getData(request, callback);
         }
-        callback.i++;
-    };
-
-
-    callback.i = 0;
-
-    for (i = 0; i < requests.length; i++) {
-        var request = requests[i];
-        getData(request, callback);
     }
 }
+callAboutPLace()
 
 
 
