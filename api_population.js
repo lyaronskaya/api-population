@@ -103,7 +103,7 @@ var callAboutPLace = function() {
     var requests = ['/cities', '/populations'];
 
     var input = window.prompt('Введите страну или город', 'Cameroon');
-    console.log(input);
+
     if (input && input !== '') {
         var responses = {};
 
@@ -128,10 +128,9 @@ var callAboutPLace = function() {
                         c.push(responses['/cities'][i].name);
                     }
                 }
-                console.log(c + ' p ' +  p);
-                if (c.length < 1) {
 
-                    //alert('Unknown city or country');
+                if (c.length < 1) {
+                    alert('Unknown city or country');
                 }
                 else {
                     for (i = 0; i < responses['/populations'].length; i++) {
