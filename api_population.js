@@ -50,10 +50,9 @@ var responses = {};
 
 function callback(error, result) {
     var request = requests[callback.i];
-    console.log('i', callback.i, request);
     responses[request] = result;
     var l = [];
-    console.log('responses ', responses);
+
     for (K in responses)
         l.push(K);
 
